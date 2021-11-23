@@ -15,7 +15,7 @@ def Custom_Decompression(filename, output_file=""):
         for i in split_data:
             #print("Vocab : ",vocab)
             #print("I : ",i)
-            if(i=="" and flag==0):
+            if (i=="" and flag==0):
                 #print("Second i space")
                 flag=1
             elif(i=="" and flag==1):
@@ -26,7 +26,7 @@ def Custom_Decompression(filename, output_file=""):
                 flag=1
                 temp_array = i.split("]")
                 #print("Temp array : ",temp_array)
-                if(len(temp_array)==1):
+                if (len(temp_array)==1):
                     temp_str = temp_array[0]
                     uncompressed_str += temp_array[0]
                     tmp = ""
@@ -51,27 +51,19 @@ def Custom_Decompression(filename, output_file=""):
                                 vocab[str(index)] = tmp
                                 index+=1
                                 tmp = ""
-                elif(len(temp_array)==3):
-                    if(temp_array[2]==""):
+                elif len(temp_array)==3:
+                    temp_str = temp_array[0]
+                    tmp = ""
+                    for j in range(len(temp_str)):
+                        tmp += temp_str[j]
+                        if(tmp not in vocab.values()):
+                            vocab[str(index)] = tmp
+                            index+=1
+                            tmp = ""
+                    if (temp_array[2]==""):
                         uncompressed_str += str(temp_array[0]) + "]"
-                        temp_str = temp_array[0]
-                        tmp = ""
-                        for j in range(len(temp_str)):
-                            tmp += temp_str[j]
-                            if(tmp not in vocab.values()):
-                                vocab[str(index)] = tmp
-                                index+=1
-                                tmp = ""
                     else:
                         uncompressed_str += str(temp_array[0]) + "]" + str(temp_array[2])
-                        temp_str = temp_array[0]
-                        tmp = ""
-                        for j in range(len(temp_str)):
-                            tmp += temp_str[j]
-                            if(tmp not in vocab.values()):
-                                vocab[str(index)] = tmp
-                                index+=1
-                                tmp = ""
                         temp_str = temp_array[2]
                         tmp = ""
                         for j in range(len(temp_str)):
@@ -80,8 +72,8 @@ def Custom_Decompression(filename, output_file=""):
                                 vocab[str(index)] = tmp
                                 index+=1
                                 tmp = ""
-                elif(len(temp_array)==4):
-                    if(temp_array[3]=="" and temp_array[1]==""):
+                elif len(temp_array)==4:
+                    if (temp_array[3]=="" and temp_array[1]==""):
                         uncompressed_str += vocab[str(temp_array[0])] + "]"
                     elif(temp_array[3]!="" and temp_array[1]==""):
                         uncompressed_str += vocab[str(temp_array[0])] + "]" + str(temp_array[3])
@@ -93,7 +85,7 @@ def Custom_Decompression(filename, output_file=""):
                                 vocab[str(index)] = tmp
                                 index+=1
                                 tmp = ""
-                    elif(temp_array[3]=="" and temp_array[1]!=""):
+                    elif temp_array[3] == "":
                         uncompressed_str += vocab[str(temp_array[0])] + str(temp_array[1]) + "]"
                         temp_str = temp_array[1]
                         tmp = ""
@@ -105,7 +97,7 @@ def Custom_Decompression(filename, output_file=""):
                                 vocab[str(index)] = tmp
                                 index+=1
                                 tmp = ""
-                    elif(temp_array[3]!="" and temp_array[1]!=""):
+                    else:
                         uncompressed_str += vocab[str(temp_array[0])] + str(temp_array[1]) + "]" + str(temp_array[3])
                         temp_str = temp_array[1]
                         tmp = ""
@@ -128,8 +120,8 @@ def Custom_Decompression(filename, output_file=""):
 
                 else:
                     continue
-                #print("Vocab : ",vocab)
-                #print(uncompressed_str)
+                            #print("Vocab : ",vocab)
+                            #print(uncompressed_str)
 
     with open(filename+"_devocab", "w") as f:
         for i in vocab:
