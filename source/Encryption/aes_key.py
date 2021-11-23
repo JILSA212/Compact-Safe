@@ -33,11 +33,7 @@ def SubByte(onebyte):
     return Sbox.S_box[int(onebyte[0], 16)][int(onebyte[1], 16)]
 
 def SubBytes(key):
-    temp_list = []
-    for i in range(4):
-        #print("Key[i] : ",key[i])
-        temp_list.append(SubByte(key[i]))
-    return temp_list
+    return [SubByte(key[i]) for i in range(4)]
 
 def Rcon(key, round):
     variable = ""

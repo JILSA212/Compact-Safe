@@ -10,7 +10,7 @@ def Custom_Compression(filepath, output_file=""):
         compressed_str = ""
         index = 0
         for i in range(len(data)):
-            if(data[i]=="[" or data[i]=="]"):
+            if data[i] in ["[", "]"]:
                 if(temp_str in vocab):
                     if((len(str(vocab[temp_str])))<4):
                         compressed_str += temp_str
@@ -31,10 +31,7 @@ def Custom_Compression(filepath, output_file=""):
                             index+=1
                 temp_str = ""
                 comp_temp_str = ""
-                if(data[i]=="["):
-                    compressed_str += "[["
-                else:
-                    compressed_str += "]]"
+                compressed_str += "[[" if (data[i]=="[") else "]]"
                 continue
             temp_str += data[i]
             if(temp_str in vocab):
@@ -53,8 +50,8 @@ def Custom_Compression(filepath, output_file=""):
     compressed_str = compressed_str.replace("[]","")
 
     with open(filepath+"_vocab","w") as f:
-        for i in vocab:
-            f.write(str(i) + " " + str(vocab[i]) + "\n")
+        for i, value in vocab.items():
+            f.write(str(i) + " " + str(value) + "\n")
     print("Creating compressed file")
 
     if(output_file==""):
@@ -69,7 +66,7 @@ def Custom_Compression(filepath, output_file=""):
         file.write(compressed_str)
 
     print("File creation successful")
-    
+
     print("Length of original : ",len(data))
     print("Length of Compressed : ",len(compressed_str))
     print("Compression Ratio : ",(len(data)/len(compressed_str)))

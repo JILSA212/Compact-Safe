@@ -7,14 +7,13 @@ file_name = "Hello"
 def Open_file():
     filepath = askopenfilename(initialdir="/", title="Open a file", filetypes=[("All files","*.*")])
     file_name = filepath
-    #CompactSafe.file_path["text"] = filepath
-    if not filepath:
+    if not file_name:
         file_name = ""
         return
 
 def Open_folder():
     folderpath = askdirectory()
     file_name = folderpath
-    if not folderpath:
+    if not file_name:
         file_name = ""
         return

@@ -12,10 +12,7 @@ def SubByte(onebyte):
 def InvSubBytes(block):
     new_list = []
     for i in range(4):
-        temp_list = []
-        for j in range(4):
-            #print(block[i][j], "\t", SubByte(block[i][j]))
-            temp_list.append(SubByte(block[i][j]))
+        temp_list = [SubByte(block[i][j]) for j in range(4)]
         new_list.append(temp_list)
     return new_list
 
@@ -26,28 +23,26 @@ def InvShiftRows(block):
     block[3][0], block[3][1], block[3][2], block[3][3] = block[3][1], block[3][2], block[3][3], block[3][0]
 
 def Mul(a, b):
-    if(a!="00" and b!="00"):
-        if(b!="01"):
-            #print("A[0] : ",a[0],"\tA[1] : ",a[1],"\tB[0] : ",b[0],"\tB[1] : ",b[1])
-            #print(int(a[0],16),"\t",int(a[1],16),"\t",int(b[0],16),"\t",int(b[1],16))
-            x = int(a[0], 16)
-            y = int(a[1], 16)
-            z = int(b[0], 16)
-            w = int(b[1], 16)
-            #print(Ltable.L_table[x][y])
-            #print(Ltable.L_table[z][w])
-            temp = (int(Ltable.L_table[x][y], 16) + int(Ltable.L_table[z][w],16)) % 255
-            #print("Temp : ",temp)
-            temp = str(hex(temp)).replace("0x","")
-            temp = "0" + temp if len(temp)==1 else temp
-            #print("Returning : ",Etable.E_table[int(temp[0],16)][int(temp[1],16)])
-            return Etable.E_table[int(temp[0],16)][int(temp[1],16)]
-        else:
-            #print("Returning A : ",a)
-            return a
-    else:
+    if a == "00" or b == "00":
         #print("Returning 0 : 00")
         return "00"
+    if b == "01":
+        #print("Returning A : ",a)
+        return a
+    #print("A[0] : ",a[0],"\tA[1] : ",a[1],"\tB[0] : ",b[0],"\tB[1] : ",b[1])
+    #print(int(a[0],16),"\t",int(a[1],16),"\t",int(b[0],16),"\t",int(b[1],16))
+    x = int(a[0], 16)
+    y = int(a[1], 16)
+    z = int(b[0], 16)
+    w = int(b[1], 16)
+    #print(Ltable.L_table[x][y])
+    #print(Ltable.L_table[z][w])
+    temp = (int(Ltable.L_table[x][y], 16) + int(Ltable.L_table[z][w],16)) % 255
+    #print("Temp : ",temp)
+    temp = str(hex(temp)).replace("0x","")
+    temp = "0" + temp if len(temp)==1 else temp
+    #print("Returning : ",Etable.E_table[int(temp[0],16)][int(temp[1],16)])
+    return Etable.E_table[int(temp[0],16)][int(temp[1],16)]
 
 def InvColumnMix(block):
     temp_list = []
